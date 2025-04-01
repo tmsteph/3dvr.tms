@@ -2,12 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>TMS MVP – The Future is Friendly</title>
+  <title>TMS MVP – Clear Image Fix</title>
   <style>
     body { font-family: sans-serif; padding: 2em; background: #f4f8fb; color: #222; max-width: 800px; margin: auto; }
     h1 { font-size: 2.5em; text-align: center; }
     p { font-size: 1.2em; line-height: 1.6; margin-bottom: 1em; }
-    img { max-width: 100%; width: 100%; border-radius: 12px; margin: 1em 0; display: block; }
+    img.tms-image {
+      display: block;
+      max-width: 100%;
+      width: 100%;
+      height: auto;
+      margin: 1em 0;
+      /* Comment these out if needed */
+      border-radius: 0px;
+      box-shadow: none;
+    }
     .center { text-align: center; }
     .large { font-size: 2em; }
     .blue-background { background-color: #cce7ff; padding: 1em; border-radius: 1em; }
@@ -15,7 +24,15 @@
     .rounded { border-radius: 16px; }
     .shadow { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .margin-bottom { margin-bottom: 2em; }
-    .button { display: inline-block; background: #222; color: white; padding: 1em 2em; border-radius: 8px; text-decoration: none; margin: 1em 0; }
+    .button {
+      display: inline-block;
+      background: #222;
+      color: white;
+      padding: 1em 2em;
+      border-radius: 8px;
+      text-decoration: none;
+      margin: 1em 0;
+    }
     #output { margin-bottom: 2em; }
   </style>
 </head>
@@ -24,14 +41,14 @@
   <div id="output"></div>
 
   <h1>TMS Renderer</h1>
-  <textarea id="tmsInput" rows="12" style="width:100%; font-family: monospace;">
+  <textarea id="tmsInput" rows="14" style="width:100%; font-family: monospace;">
 header: The Future is Friendly
 style: center, large, blue-background
 
 text: This is a new way to make websites.
 style: calm, margin-bottom
 
-image: https://placekitten.com/600/300
+image: https://picsum.photos/1200/600
 style: rounded, shadow
 
 button: Let’s Begin
@@ -71,7 +88,8 @@ style: center
           const src = line.split("image:")[1].trim();
           const el = document.createElement("img");
           el.src = src;
-          if (currentStyle) el.className = currentStyle;
+          el.className = "tms-image";
+          if (currentStyle) el.className += " " + currentStyle;
           output.appendChild(el);
         }
 
