@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TMS MVP – The Future is Friendly</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; background: #f4f8fb; color: #222; max-width: 800px; margin: auto; }
+    h1 { font-size: 2.5em; text-align: center; }
+    p { font-size: 1.2em; line-height: 1.6; margin-bottom: 1em; }
+    img { max-width: 100%; border-radius: 12px; margin: 1em 0; }
+    .center { text-align: center; }
+    .large { font-size: 2em; }
+    .blue-background { background-color: #cce7ff; padding: 1em; border-radius: 1em; }
+    .calm { color: #444; line-height: 1.7; }
+    .rounded { border-radius: 16px; }
+    .shadow { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .margin-bottom { margin-bottom: 2em; }
+    .button { display: inline-block; background: #222; color: white; padding: 1em 2em; border-radius: 8px; text-decoration: none; margin-top: 1em; }
+  </style>
+</head>
+<body>
+
+  <h1>TMS Renderer</h1>
+  <textarea id="tmsInput" rows="12" style="width:100%; font-family: monospace;">
+header: The Future is Friendly
+style: center, large, blue-background
+
+text: This is a new way to make websites.
+style: calm, margin-bottom
+
+image: sunrise.jpg
+style: rounded, shadow
+
+button: Let’s Begin
+button link: https://3dvr.tech
+style: center
+  </textarea>
+
+  <button onclick="renderTMS()">Render</button>
+
+  <hr>
+
+  <div id="output"></div>
+
+  <script>
+    function renderTMS() {
+      const lines = document.getElementById("tmsInput").value.trim().split("\n");
+      const output = document.getElementById("output");
+      output.innerHTML = '';
+      let currentStyle = '';
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+
+        if (line.startsWith("header:")) {
+          const text = line.split("header:")[1].trim();
+          const el = document.createElement("h1");
+          el.textContent = text;
+          if (currentStyle) el.className = currentStyle;
+          output.appendChild(el);
+        }
+
+        else if (line.startsWith("text:")) {
+          const text = line.split("text:")[1].trim();
+          const el = document.createElement("p");
+          el.textContent = text;
+          if (currentStyle) el.className = currentStyle;
+          output.appendChild(el);
+        }
+
+        else if (line.startsWith("image:")) {
+          const src = line.split("image:")[1].trim();
+          const el = document.createElement("img");
+          el.src = src;
+          if (currentStyle) el.className = currentStyle;
+          output.appendChild(el);
+        }
+
+        else if (line.startsWith("background:")) {
+          const bg = line.split("background:")[1].trim();
+          document.body.style.backgroundImage = `url(${bg})`;
+          document.body.style.backgroundSize = "cover";
+          document.body.style.backgroundPosition = "center";
+        }
+
+        else if (line.startsWith("button:")) {
+          const text = line.split("button:")[1].trim();
+          const link = lines[i + 1].startsWith("button link:") ? lines[i + 1].split("button link:")[1].trim() : "#";
+          const el = document.createElement("a");
+          el.textContent = text;
+          el.href = link;
+          el.className = "button";
+          if (currentStyle) el.className += " " + currentStyle;
+          output.appendChild(el);
+        }
+
+        else if (line.startsWith("style:")) {
+          currentStyle = line.split("style:")[1].trim().split(',').map(s => s.trim()).join(' ');
+        }
+      }
+    }
+
+    renderTMS(); // render on load
+  </script>
+</body>
+</html>
