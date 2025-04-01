@@ -16,9 +16,12 @@
     .shadow { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .margin-bottom { margin-bottom: 2em; }
     .button { display: inline-block; background: #222; color: white; padding: 1em 2em; border-radius: 8px; text-decoration: none; margin-top: 1em; }
+    #output { margin-bottom: 2em; }
   </style>
 </head>
 <body>
+
+  <div id="output"></div>
 
   <h1>TMS Renderer</h1>
   <textarea id="tmsInput" rows="12" style="width:100%; font-family: monospace;">
@@ -28,7 +31,7 @@ style: center, large, blue-background
 text: This is a new way to make websites.
 style: calm, margin-bottom
 
-image: sunrise.jpg
+image: https://placekitten.com/600/300
 style: rounded, shadow
 
 button: Let’s Begin
@@ -37,10 +40,6 @@ style: center
   </textarea>
 
   <button onclick="renderTMS()">Render</button>
-
-  <hr>
-
-  <div id="output"></div>
 
   <script>
     function renderTMS() {
@@ -100,7 +99,7 @@ style: center
       }
     }
 
-    renderTMS(); // render on load
+    renderTMS();
   </script>
 </body>
 </html>
